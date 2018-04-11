@@ -10,6 +10,9 @@
 #include <fstream>
 
 #include "requestparser.h"
+#include "router.h"
+
+
 
 ServerListener::ServerListener(int port, size_t buffer_size) {
     this->port = port;
@@ -57,7 +60,7 @@ void ServerListener::run(std::function<void(ClientAcceptationException)> client_
     std::map<SOCKET, std::thread> threads;
 
     bool server_running = true;
-    ShellExecute(0, 0, "http://localhost:80/app", 0, 0 , SW_SHOW );
+    ShellExecute(0, 0, "http://localhost:80", 0, 0 , SW_SHOW );
     while(server_running) {
         SOCKET client_socket;
 
@@ -136,22 +139,11 @@ void ServerListener::clientHandler(SOCKET client_socket, size_t buffer_size) {
         std::cout << "\n";
 
         std::string response_body = "";
-
-        std::ifstream t;
-        t.open("app\\index.html");
-        std::string buffer = "";
-        std::string line;
-        while(t){
-        std::getline(t, line);
-            buffer += line + "\r\n";
-        }
-        t.close();
-        response_body = buffer;
-
-
+        pair<string, string> responseGen =  routes::handle(parser.getPath());
+        response_body = responseGen.first;
 
         std::string response_headers = "HTTP/1.1 200 OK\r\n"
-        "Content-Type: text/html; charset=UTF-8\r\n"
+        "Content-Type: " + responseGen.second + "; charset=UTF-8\r\n"
         "Connection: keep-alive\r\n"
         "Content-Length: " + std::to_string(response_body.length()) + "\r\n\r\n";
 
