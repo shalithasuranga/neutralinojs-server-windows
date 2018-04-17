@@ -120,18 +120,14 @@ next_iter:
                 charcount = stoi(size_it->second);
             }
         }
-        //std::cout << (headers_available ? "true" : "false") << " - ." << method << "." << std::endl;
         if(headers_available && method == "GET") { // GET request
             parsingDone = true;
-            //break;
         }
 
-        //std::cout << charcount << " vs " << body.size() << std::endl;
         if(beginbody) {
             body += buf[i];
             if(charcount == body.size()) {
                 parsingDone = true;
-                //break;
             }
         }
 
@@ -140,7 +136,7 @@ next_iter:
         /* --- / end extended code for body parser --- */
     }
     
-    //std::cout << "------- content end ------ \n";
+
 }
 
 bool RequestParser::allHeadersAvailable() {
