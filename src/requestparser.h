@@ -32,6 +32,12 @@ class RequestParser
     std::map<std::string, std::string> headers;
     bool headers_available;
 
+    std::string body;
+    char prev_char;
+    bool beginbody;
+    int charcount;
+    bool parsingDone;
+
 public:
 
     /**
@@ -81,6 +87,10 @@ public:
      * Prepare the object to handle another request (clear all extracted data).
      */
     void reset();
+
+    std::string getBody();
+
+    bool isParsingDone();
 
     virtual ~RequestParser() = default;
 };

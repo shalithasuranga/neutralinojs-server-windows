@@ -1,3 +1,5 @@
+#include <iostream>
+#include <string>
 #include "requestparser.h"
 
 RequestParser::RequestParser() {
@@ -18,9 +20,16 @@ void RequestParser::reset() {
     tmp_header_value = "";
 
     previous_char = '\0';
+    prev_char = '\0';
 
     headers.clear();
     headers_available = false;
+    beginbody = false;
+    body = "";
+
+    charcount = -1;
+
+    parsingDone = false;
 }
 
 void RequestParser::processChunk(const char *buf, size_t size) {
@@ -94,7 +103,44 @@ void RequestParser::processChunk(const char *buf, size_t size) {
 next_iter:
         previous_char = c;
         beginning = false;
+
+        /* --- begin extended code for body parser --- */
+
+        if(c == '\n' && prev_char == '\r') {
+            if(i+2 < size) {
+                if( buf[i+1] == '\r' && buf[i+2] == '\n' ) {
+                    beginbody = true;
+                }
+            }
+        }
+
+        if(charcount == -1) {
+            auto size_it = headers.find("Content-Length");
+            if(size_it != headers.end()) {
+                charcount = stoi(size_it->second);
+            }
+        }
+        //std::cout << (headers_available ? "true" : "false") << " - ." << method << "." << std::endl;
+        if(headers_available && method == "GET") { // GET request
+            parsingDone = true;
+            //break;
+        }
+
+        //std::cout << charcount << " vs " << body.size() << std::endl;
+        if(beginbody) {
+            body += buf[i];
+            if(charcount == body.size()) {
+                parsingDone = true;
+                //break;
+            }
+        }
+
+        prev_char = c; 
+
+        /* --- / end extended code for body parser --- */
     }
+    
+    //std::cout << "------- content end ------ \n";
 }
 
 bool RequestParser::allHeadersAvailable() {
@@ -115,4 +161,12 @@ std::string RequestParser::getPath() {
 
 std::string RequestParser::getProtocol() {
     return proto_ver;
+}
+
+std::string RequestParser::getBody() {
+    return body;
+}
+
+bool RequestParser::isParsingDone() {
+    return parsingDone;
 }

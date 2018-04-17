@@ -104,7 +104,7 @@ void ServerListener::clientHandler(SOCKET client_socket, size_t buffer_size) {
         parser.reset();
 
         bool headers_ready = false;
-        while(!headers_ready) {
+        while(!parser.isParsingDone()) {
             bytes_received = recv(client_socket, recvbuf, recvbuflen, 0);
             if(bytes_received > 0) {
                 parser.processChunk(recvbuf, bytes_received);
@@ -115,6 +115,10 @@ void ServerListener::clientHandler(SOCKET client_socket, size_t buffer_size) {
                 goto cleanup;
             }
         }
+
+        std::cout << "------- body ----------" << std::endl;
+        std::cout << parser.getBody() << std::endl;
+        std::cout << "------- body ----------" << std::endl;
 
         auto headers = parser.getHeaders();
 
