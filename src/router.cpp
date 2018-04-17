@@ -5,8 +5,10 @@
 #include "functions.h"
 #include "core/filesystem.h"
 
+
 using namespace std;
 using namespace filesystem;
+
 
 namespace routes {
 
@@ -28,7 +30,7 @@ namespace routes {
         return buffer;
     }
 
-    pair<string, string> handle(string path) {
+    pair<string, string> handle(string path, string j) {
         if(path == "/"){
             return make_pair(routes::getFile("app\\index.html"), "text/html");
         }
@@ -42,7 +44,7 @@ namespace routes {
                 string func = portions[2];
                 //cout << module << "."<< func << endl;
                 pfunc f = filesystem::funcmap[module + "." + func];
-                string output = (*f)(""); 
+                string output = (*f)(j); 
                 return make_pair(output, "application/json");
             }
         }

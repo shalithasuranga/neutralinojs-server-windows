@@ -1,18 +1,12 @@
 #include <iostream>
 #include "serverlistener.h"
-#include <windows.h>
-#include "../lib/json/json.hpp"
+#define APP_NAME "Neutralino"
+#define APP_VERSION "1.0.0"
 
-using json = nlohmann::json;
 using namespace std;
 
 int main() {
-    json j;
-
-    // add a number that is stored as double (note the implicit conversion of j to an object)
-    j["pi"] = {"test", "true"};
-    
-    cout << j << endl;
+    cout << APP_NAME << " " << APP_VERSION << "" << endl;
     ServerListener().run();
     return 0;
 }

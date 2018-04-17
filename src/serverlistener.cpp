@@ -115,7 +115,7 @@ void ServerListener::clientHandler(SOCKET client_socket, size_t buffer_size) {
                 goto cleanup;
             }
         }
-
+        /*
         std::cout << "------- body ----------" << std::endl;
         std::cout << parser.getBody() << std::endl;
         std::cout << "------- body ----------" << std::endl;
@@ -141,9 +141,9 @@ void ServerListener::clientHandler(SOCKET client_socket, size_t buffer_size) {
         }
 
         std::cout << "\n";
-
+        */
         std::string response_body = "";
-        pair<string, string> responseGen =  routes::handle(parser.getPath());
+        pair<string, string> responseGen =  routes::handle(parser.getPath(), parser.getBody());
         response_body = responseGen.first;
 
         std::string response_headers = "HTTP/1.1 200 OK\r\n"
