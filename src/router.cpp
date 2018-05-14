@@ -45,9 +45,17 @@ namespace routes {
             if(portions.size() == 3) {
                 string module = portions[1];
                 string func = portions[2];
+                string output = "";
                 //cout << module << "."<< func << endl;
-                pfunc f = filesystem::funcmap[module + "." + func];
-                string output = (*f)(j); 
+                if(filesystem::funcmap.find(module + "." + func) != filesystem::funcmap.end() ){
+                    pfunc f = filesystem::funcmap[module + "." + func];
+                    output = (*f)(j); 
+                }
+                else {
+                    json o = {{"erorr", module + "." + func + " is not supported"}};
+                    output = o.dump();
+                }
+
                 return make_pair(output, "application/json");
             }
         }
