@@ -4,11 +4,13 @@
 #include <vector>
 #include "functions.h"
 #include "core/filesystem.h"
+#include "settings.h"
+#include "../lib/json/json.hpp"
 
 
 using namespace std;
 using namespace filesystem;
-
+using json = nlohmann::json;
 
 namespace routes {
 
@@ -30,7 +32,9 @@ namespace routes {
     }
 
     pair<string, string> handle(string path, string j) {
-        if(path == "/"){
+        json options = settings::getOptions();
+        string appname = options["appname"];
+        if(path == "/" +  appname ){
             return make_pair(routes::getFile("app\\index.html"), "text/html");
         }
         else if(path == "/neutralino.js"){

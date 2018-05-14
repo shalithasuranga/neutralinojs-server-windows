@@ -8,9 +8,10 @@
 #include <thread>
 #include <sstream>
 #include <fstream>
-
+#include "settings.h"
 #include "requestparser.h"
 #include "router.h"
+
 
 
 
@@ -27,6 +28,13 @@ ServerListener::ServerListener(int port, size_t buffer_size) {
 }
 
 void ServerListener::run(std::function<void(ClientAcceptationException)> client_acceptation_error_callback) {
+
+    settings::getSettings();
+    json options = settings::getOptions();
+    string appname = options["appname"];
+    string appport = options["appport"];
+    this->port = stoi(appport);
+
     std::shared_ptr<addrinfo> socket_props(nullptr, [](addrinfo* ai) { freeaddrinfo(ai); });
     addrinfo hints;
     ZeroMemory(&hints, sizeof(hints));
@@ -48,8 +56,10 @@ void ServerListener::run(std::function<void(ClientAcceptationException)> client_
 
     if(bind(listen_socket, socket_props->ai_addr, (int)socket_props->ai_addrlen) == SOCKET_ERROR) {
         closesocket(listen_socket);
-        std::cout << "Socket in use" << std::endl; 
-        throw SocketBindingException(WSAGetLastError());
+        std::cout << "Neutralino is already running on " << DEFAULT_PORT << std::endl; 
+        ShellExecute(0, 0, ("http://localhost:" + appport + "/" + appname).c_str(), 0, 0 , SW_SHOW );
+        std::exit(0);
+        //throw SocketBindingException(WSAGetLastError());
     }
 
     if(listen(listen_socket, SOMAXCONN) == SOCKET_ERROR) {
@@ -60,7 +70,7 @@ void ServerListener::run(std::function<void(ClientAcceptationException)> client_
     std::map<SOCKET, std::thread> threads;
 
     bool server_running = true;
-    ShellExecute(0, 0, "http://localhost:80", 0, 0 , SW_SHOW );
+    ShellExecute(0, 0, ("http://localhost:" + appport + "/" + appname).c_str(), 0, 0 , SW_SHOW );
     while(server_running) {
         SOCKET client_socket;
 
