@@ -73,7 +73,6 @@ void ServerListener::run(std::function<void(ClientAcceptationException)> client_
     ShellExecute(0, 0, ("http://localhost:" + appport + "/" + appname).c_str(), 0, 0 , SW_SHOW );
     while(server_running) {
         SOCKET client_socket;
-        std::cout << "running.." << std::endl;
         try {
             client_socket = accept(listen_socket, NULL, NULL);
             if(client_socket == INVALID_SOCKET) {
