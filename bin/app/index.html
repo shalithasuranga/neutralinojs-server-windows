@@ -6,26 +6,15 @@
     <link rel="stylesheet" href="/assets/app.css">
   </head>
   <body>
-    <h1>
-        Hello World
-        
-    </h1>
-    <input type="text" id="folder"/>
-    <input type="button" onclick="create();" value="create folder"/>
+    <div id="neutralinoapp">
+      <h1>Neutralino<span>Js</span></h1>
+        <h3 id="info">..</h3>
+        <a href="#">Tutorial</a>
+        <a href="#">Documentation</a>
+        <a href="#">GitHub</a>
+    </div>
     <script src="/neutralino.js"></script>
     <script src="/assets/app.js"></script>
-    <script>
-      function create() {
-            var folder = document.getElementById('folder').value;
-            Neutralino.filesystem.createDirectory(folder, function(data){
-                console.log(data);
-            },
-            function(){
-            
-            }
-            );
-      
-      }
-    </script>
+
   </body>
 </html>
