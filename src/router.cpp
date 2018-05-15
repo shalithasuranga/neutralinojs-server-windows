@@ -22,9 +22,9 @@ namespace routes {
         ifstream t;
         t.open(file);
         string buffer = "";
-        string line;
-        while(t){
-        getline(t, line);
+        string line = "";
+        while(!t.eof()){
+            getline(t, line);
             buffer += line + "\r\n";
         }
         t.close();
@@ -43,6 +43,12 @@ namespace routes {
         }
         else if(path == "/neutralino.js"){
             return make_pair(routes::getClientJs(), "text/javascript");
+        }
+        else if(path.find("/assets") != string::npos && path.find(".js") != string::npos){
+            return make_pair(routes::getFile("app" + path), "text/javascript");
+        }
+        else if(path.find("/assets") != string::npos && path.find(".css") != string::npos){
+            return make_pair(routes::getFile("app" + path), "text/css");
         }
         else if(path == "/") {
             return make_pair(routes::getIndex(), "text/html");
