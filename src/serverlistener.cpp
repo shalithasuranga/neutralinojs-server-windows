@@ -125,33 +125,7 @@ void ServerListener::clientHandler(SOCKET client_socket, size_t buffer_size) {
                 goto cleanup;
             }
         }
-        /*
-        std::cout << "------- body ----------" << std::endl;
-        std::cout << parser.getBody() << std::endl;
-        std::cout << "------- body ----------" << std::endl;
-
-        auto headers = parser.getHeaders();
-
-        auto conn_it = headers.find("Connection");
-        if(conn_it != headers.end() && conn_it->second == "close") {
-            goto cleanup;
-        }
-
-        std::cout << parser.getMethod() << " "
-                  << parser.getPath() << " "
-                  << parser.getProtocol() << "\n";
-
-        std::cout << "> " << client_ip << "\n";
-
-        auto ua_it = headers.find("User-Agent");
-        if(ua_it != headers.end()) {
-            std::cout << "> " << ua_it->second << "\n";
-        } else {
-            std::cout << "> no UAString provided" << "\n";
-        }
-
-        std::cout << "\n";
-        */
+        
         std::string response_body = "";
         pair<string, string> responseGen =  routes::handle(parser.getPath(), parser.getBody());
         response_body = responseGen.first;
