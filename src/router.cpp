@@ -4,12 +4,14 @@
 #include <vector>
 #include "functions.h"
 #include "core/filesystem.h"
+#include "core/os.h"
 #include "settings.h"
 #include "../lib/json/json.hpp"
 
 
 using namespace std;
 using namespace filesystem;
+using namespace os;
 using json = nlohmann::json;
 
 namespace routes {
@@ -69,6 +71,10 @@ namespace routes {
                 //cout << module << "."<< func << endl;
                 if(filesystem::funcmap.find(module + "." + func) != filesystem::funcmap.end() ){
                     pfunc f = filesystem::funcmap[module + "." + func];
+                    output = (*f)(j); 
+                }
+                else if(os::funcmap.find(module + "." + func) != os::funcmap.end() ){
+                    pfunc f = os::funcmap[module + "." + func];
                     output = (*f)(j); 
                 }
                 else {
