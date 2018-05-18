@@ -28,13 +28,17 @@ namespace os {
         std::array<char, 128> buffer;
         std::string result;
         std::shared_ptr<FILE> pipe(popen(command.c_str(), "r"), pclose);
-        if (!pipe) throw std::runtime_error("popen() failed!");
-        while (!feof(pipe.get())) {
-            if (fgets(buffer.data(), 128, pipe.get()) != nullptr)
-                result += buffer.data();
+        if (!pipe) {
+            output["error"] = "Pipe open failed";
         }
-        output["stdout"] = result;
-
+        else {
+            while (!feof(pipe.get())) {
+                if (fgets(buffer.data(), 128, pipe.get()) != nullptr)
+                    result += buffer.data();
+            }
+            output["stdout"] = result;
+            output["success"] = "Command executed successfully";
+        }
         return output.dump();
        
         
