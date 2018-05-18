@@ -1,4 +1,5 @@
 #include <iostream>
+#include <fstream>
 #include "../../lib/json/json.hpp"
 #include <windows.h>
 
@@ -6,8 +7,6 @@ using namespace std;
 using json = nlohmann::json;
 
 namespace filesystem {
-
-
 
     string createDirectory(string jso) {
         json input;
@@ -28,6 +27,33 @@ namespace filesystem {
             output["error"] = "Cannot create " + filename;
             return output.dump();
         }
+       
+        
+    }
+
+    string readFile(string jso) {
+        json input;
+        json output;
+        try {
+            input = json::parse(jso);
+        }
+        catch(exception e){
+            output["error"] = "JSON parse error is occurred!";
+            return output.dump();
+        }
+        string filename = input["filename"];
+        ifstream t(filename);
+        string buffer = "";
+        string line = "";
+        while(!t.eof()){
+            getline(t, line);
+            buffer += line + "\r\n";
+        }
+        t.close();
+        output["success"] = "Reading "+ filename + " was succesful.";
+        output["content"] = buffer;
+        return output.dump();
+
        
         
     }
