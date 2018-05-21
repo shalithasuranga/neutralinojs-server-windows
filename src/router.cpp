@@ -49,7 +49,7 @@ namespace routes {
             return make_pair(routes::getFile("app\\index.html"), "text/html");
         }
         else if(path == "/neutralino.js"){
-            return make_pair(routes::getClientJs(), "text/javascript");
+            return make_pair(routes::getClientJs() + settings::getGlobalVars(), "text/javascript");
         }
         else if(path == "/settings.json"){
             return make_pair(routes::getFile("app/settings.json"), "application/json");

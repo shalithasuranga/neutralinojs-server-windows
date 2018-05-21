@@ -36,4 +36,8 @@ namespace settings {
         return options;
     }
 
+    string getGlobalVars(){
+        return "let NL_OS='Windows'";
+    }
+
 }

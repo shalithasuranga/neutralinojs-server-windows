@@ -7,5 +7,6 @@ namespace settings {
     json getSettings();
     json getOptions();
     string getFileContent(string filename);
+    string getGlobalVars();
 }
 
