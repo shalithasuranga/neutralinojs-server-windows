@@ -8,6 +8,18 @@ json options;
 
 namespace settings {
 
+    string getFileContent(string filename){
+        ifstream t(filename);
+        string buffer = "";
+        string line = "";
+        while(!t.eof()){
+            getline(t, line);
+            buffer += line + "\r\n";
+        }
+        t.close();
+        return buffer;
+    }
+
     json getOptions(){
         return options;
     }
@@ -15,22 +27,11 @@ namespace settings {
     json getSettings() {
         json settings;
         try {
-            ifstream t("app\\settings.json");
-            string buffer = "";
-            string line = "";
-            while(!t.eof()){
-                getline(t, line);
-                buffer += line + "\r\n";
-            }
-            t.close();
-            settings = json::parse(buffer);
-
-
+            settings = json::parse(getFileContent("app\\settings.json"));
         }
         catch(exception e){
             cout << e.what() << endl;
         }
-        //return settings;
         options = settings;
         return options;
     }

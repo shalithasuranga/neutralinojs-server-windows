@@ -6,5 +6,6 @@ using json = nlohmann::json;
 namespace settings {
     json getSettings();
     json getOptions();
+    string getFileContent(string filename);
 }
 

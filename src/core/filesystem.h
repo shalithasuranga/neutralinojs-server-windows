@@ -19,6 +19,8 @@ namespace filesystem {
         {"filesystem.createDirectory", filesystem::createDirectory},
         {"filesystem.removeDirectory", filesystem::removeDirectory},
         {"filesystem.readFile", filesystem::readFile},
+        {"filesystem.writeFile", filesystem::writeFile},
+        {"filesystem.removeFile", filesystem::removeFile}
     };
 
 
