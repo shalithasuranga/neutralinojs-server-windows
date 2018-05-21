@@ -5,15 +5,20 @@
 namespace filesystem {
     string createDirectory(string jso);
 
+    string removeDirectory(string jso);
+
     string writeFile(string jso);
 
     string readFile(string jso);
+
+    string removeFile(string jso);
 
     typedef string (*pfunc)(string);
 
     map <string, pfunc> funcmap = {
         {"filesystem.createDirectory", filesystem::createDirectory},
-        {"filesystem.readFile", filesystem::readFile}
+        {"filesystem.removeDirectory", filesystem::removeDirectory},
+        {"filesystem.readFile", filesystem::readFile},
     };
 
 

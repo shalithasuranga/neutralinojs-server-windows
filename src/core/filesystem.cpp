@@ -30,6 +30,28 @@ namespace filesystem {
         
     }
 
+    string removeDirectory(string jso) {
+        json input;
+        json output;
+        try {
+            input = json::parse(jso);
+        }
+        catch(exception e){
+            output["error"] = "JSON parse error is occurred!";
+            return output.dump();
+        }
+        string dir = input["dir"];
+        if(RemoveDirectory(dir.c_str())){
+            return output.dump();
+        }
+        else{
+            output["error"] = "Cannot remove " + dir;
+            return output.dump();
+        }
+       
+        
+    }
+
     string readFile(string jso) {
         json input;
         json output;
