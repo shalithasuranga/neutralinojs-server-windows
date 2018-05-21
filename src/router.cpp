@@ -5,6 +5,7 @@
 #include "functions.h"
 #include "core/filesystem.h"
 #include "core/os.h"
+#include "core/computer.h"
 #include "settings.h"
 #include "../lib/json/json.hpp"
 
@@ -75,6 +76,10 @@ namespace routes {
                 }
                 else if(os::funcmap.find(module + "." + func) != os::funcmap.end() ){
                     pfunc f = os::funcmap[module + "." + func];
+                    output = (*f)(j); 
+                }
+                else if(computer::funcmap.find(module + "." + func) != computer::funcmap.end() ){
+                    pfunc f = computer::funcmap[module + "." + func];
                     output = (*f)(j); 
                 }
                 else {
