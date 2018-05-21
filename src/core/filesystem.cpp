@@ -20,7 +20,6 @@ namespace filesystem {
         }
         string filename = input["name"];
         if(CreateDirectory(filename.c_str(), NULL)){
-            output["success"] = filename + " directory was created!";
             return output.dump();
         }
         else{
@@ -50,7 +49,6 @@ namespace filesystem {
             buffer += line + "\r\n";
         }
         t.close();
-        output["success"] = "Reading "+ filename + " was succesful.";
         output["content"] = buffer;
         return output.dump();
 

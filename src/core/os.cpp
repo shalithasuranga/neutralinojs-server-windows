@@ -38,7 +38,6 @@ namespace os {
                     result += buffer.data();
             }
             output["stdout"] = result;
-            output["success"] = "Command executed successfully";
         }
         return output.dump();
        
