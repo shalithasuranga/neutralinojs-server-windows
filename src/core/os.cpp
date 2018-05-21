@@ -2,6 +2,7 @@
 #include <fstream>
 #include "../../lib/json/json.hpp"
 #include <windows.h>
+#include <stdlib.h>
 #include <cstdio>
 #include <iostream>
 #include <memory>
@@ -38,6 +39,30 @@ namespace os {
             }
             output["stdout"] = result;
             output["success"] = "Command executed successfully";
+        }
+        return output.dump();
+       
+        
+    }
+
+    string getEnvar(string jso) {
+        json input;
+        json output;
+        try {
+            input = json::parse(jso);
+        }
+        catch(exception e){
+            output["error"] = "JSON parse error is occurred!";
+            return output.dump();
+        }
+        string i = input["name"];
+        char *o;
+        o = getenv(i.c_str());
+        if(o == NULL) {
+            output["error"] =  i + " is not defined";
+        }
+        else {
+            output["value"] = o;
         }
         return output.dump();
        
