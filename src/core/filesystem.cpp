@@ -19,7 +19,7 @@ namespace filesystem {
             output["error"] = "JSON parse error is occurred!";
             return output.dump();
         }
-        string filename = input["name"];
+        string filename = input["dir"];
         if(CreateDirectory(filename.c_str(), NULL)){
             return output.dump();
         }
