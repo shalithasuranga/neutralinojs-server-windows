@@ -1,11 +1,10 @@
 let myapp = {
-    myfunction : () => Neutralino.settings.getSettings((data) => {
-        document.getElementById('info').innerHTML = `${data.appname} is running on port ${data.appport}`;
-    }, () => {
-
-    })
+    myfunction : () => document.getElementById('info').innerHTML = `${NL_NAME} is running on port ${NL_PORT} inside ${NL_OS}.`
 };
+    
 
-window.onload = () => {
-    myapp.myfunction();
-};
+Neutralino.init({
+    load: () => {
+        myapp.myfunction();
+    }
+});
