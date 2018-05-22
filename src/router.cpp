@@ -52,7 +52,7 @@ namespace routes {
             return make_pair(routes::getClientJs() + settings::getGlobalVars(), "text/javascript");
         }
         else if(path == "/settings.json"){
-            return make_pair(routes::getFile("app/settings.json"), "application/json");
+            return make_pair(settings::getSettings().dump(), "application/json");
         }
         else if(path.find("/assets") != string::npos && path.find(".js") != string::npos){
             return make_pair(routes::getFile("app" + path), "text/javascript");
