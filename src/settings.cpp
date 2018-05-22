@@ -37,7 +37,11 @@ namespace settings {
     }
 
     string getGlobalVars(){
-        return "let NL_OS='Windows'";
+        json settings = getOptions();
+        string s = "let NL_OS='Windows';";
+        s += "let NL_NAME='" + settings["appname"].get<std::string>() + "';"; 
+        s += "let NL_PORT=" + settings["appport"].get<std::string>() + ";"; 
+        return s;
     }
 
 }
