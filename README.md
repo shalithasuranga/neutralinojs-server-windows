@@ -6,7 +6,7 @@ In electron and NWjs you have to install NodeJs, hundreds of dependence librarie
 
 # Neutralino Server Windows
 
-This lightweight server runtime which will execute on Windows will listen and process requests from Neutralino.js client library. 
+This lightweight server runtime which will execute on Windows listen and process requests from Neutralino.js client library. 
 
 ## Contribution
 
