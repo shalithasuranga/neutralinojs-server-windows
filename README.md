@@ -18,19 +18,18 @@ Help Neutralino!.
 
 ## Developer Guide
 
-- Clone forked repository
-- Install Ming C++ compiler
-
-- Compile the source
+Clone forked repository<br/>
+Install Ming C++ compiler<br/>
+Compile the source<br/>
 
 ```bash
-$ build
+> build
 ```
 
-- If you some cleaning :)
+If you some cleaning :)<br/>
 
 ```bash
-$ clean
+> clean
 ```
 
 
