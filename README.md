@@ -26,7 +26,7 @@ Help Neutralino!.
 > build
 ```
 
-- If you some cleaning :)
+- If you need some cleaning :)
 
 ```bash
 > clean
